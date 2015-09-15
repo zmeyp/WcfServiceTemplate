@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Service.Tests.ServiceRef;
 
@@ -22,9 +23,25 @@ namespace Service.Tests
         public void TestMethod1()
         {
             //_client.ClientCredentials.Windows.ClientCredential = CredentialCache.DefaultNetworkCredentials;
-            var actual = _client.GetData(123);
-            Assert.IsNotNull(actual);
-            Console.WriteLine(actual);
+
+            var actual = new List<Task<string>>(); 
+
+            for (var i = 0; i < 10; i++)
+            {
+                actual.Add(Run(i));
+            }
+
+            for (var i = 0; i < 10; i++)
+            {
+                Assert.IsNotNull(actual[i].Result);
+                Console.WriteLine(actual[i].Result);
+            }
         }
+
+        public async Task<string> Run(int count)
+        {
+            return await _client.GetDataAsync(count);
+        }
+
     }
 }

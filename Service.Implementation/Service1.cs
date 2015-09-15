@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ServiceModel;
 using Business.Logic;
 using Data.Contracts;
 using Service.Contracts;
 
 namespace Service.Implementation
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple )]
     public class Service1 : IService1
     {
         private readonly IAction _action;
@@ -41,7 +43,7 @@ namespace Service.Implementation
         {
             if (composite == null)
             {
-                throw new ArgumentNullException("composite");
+                throw new ArgumentNullException(nameof(composite));
             }
             if (composite.BoolValue)
             {

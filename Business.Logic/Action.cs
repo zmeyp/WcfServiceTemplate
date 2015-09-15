@@ -10,7 +10,6 @@ namespace Business.Logic
         public Action(IRepository repository)
         {
             _repository = repository;
-
             Trace.WriteLine("++++++++++++ Constracted Action");
         }
 
